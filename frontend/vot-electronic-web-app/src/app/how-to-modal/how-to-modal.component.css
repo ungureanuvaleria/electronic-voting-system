@@ -1,0 +1,10 @@
+.how-to-button {
+  color: #394f98;
+  display:inline-block;
+  border-bottom: 1px solid #394f9882;
+  padding-bottom: 1px;
+  cursor: pointer;
+  padding: 3px 15px;
+  border: 1px solid #394f9882;
+  border-radius: 3px;
+}

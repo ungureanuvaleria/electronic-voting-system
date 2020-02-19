@@ -1,0 +1,29 @@
+.labl {
+  display : block;
+}
+.labl > input{ /* HIDE RADIO */
+  visibility: hidden; /* Makes input not-clickable */
+  position: absolute; /* Remove input from document flow */
+}
+.labl > input + div{ /* DIV STYLES */
+  cursor:pointer;
+  border:2px solid transparent;
+}
+.labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
+  border: 2px solid rgba(65, 127, 255, 0.54);
+  box-shadow: 0 0 10px 8px rgba(0, 45, 255, 0.4);
+}
+
+.card {
+  width: 40vw;
+  background-color: #ffffff;
+  margin: 5px 15px;
+  border-radius: 3px;
+  box-shadow: -10px 10px 10px 3px #00000014;
+  padding: 1px 22px;
+  font-size: 15px;
+}
+img{
+  max-width: 80px;
+}
+
