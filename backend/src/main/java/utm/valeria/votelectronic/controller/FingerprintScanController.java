@@ -1,25 +1,37 @@
 package utm.valeria.votelectronic.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import utm.valeria.votelectronic.exception.FingerprintNotFoundException;
+import utm.valeria.votelectronic.model.Fingerprint;
+import utm.valeria.votelectronic.model.FingerprintScan;
+import utm.valeria.votelectronic.service.FingerprintService;
 
 import javax.inject.Inject;
 
 @RestController
-public class FingerprintController {
-    private static final String ENDPOINT_URL = "/api/fingerprint";
+public class FingerprintScanController {
+    private static final String ENDPOINT_URL = "/api/fingerprintScan";
     
-    private SimpMessagingTemplate brokerMessagingTemplate;
+    private FingerprintService fingerprintService;
     
     @Inject
-    public void setBrokerMessagingTemplate(SimpMessagingTemplate brokerMessagingTemplate) {
-        this.brokerMessagingTemplate = brokerMessagingTemplate;
+    public void setFingerprintService(FingerprintService fingerprintService) {
+        this.fingerprintService = fingerprintService;
     }
     
     @PostMapping(ENDPOINT_URL)
-    public void receiveFingerprintScan(@RequestBody String mock) {
+    @Transactional
+    public void receiveFingerprintScan(@RequestBody FingerprintScan fingerprintScan) {
+        try {
+            this.fingerprintService.transferFingerprintScanToWorkstation(fingerprintScan);
+        } catch (FingerprintNotFoundException ex) {
+            System.out.println(ex.getMessage());
+        }
         /* TODO
             1. @RequestBody should be in format(example):
             {
@@ -67,6 +79,5 @@ public class FingerprintController {
              catch on, I promise.
              
          */
-        System.out.println("Received new scan from a fingerprint! " + mock);
     }
 }

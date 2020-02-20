@@ -7,7 +7,7 @@ import lombok.Data;
 public class FingerprintScan {
 
     @JsonProperty("fingerprint_id")
-    private int fingerprintId;
+    private String fingerprintId;
 
     @JsonProperty("user_id")
     private int userId;
