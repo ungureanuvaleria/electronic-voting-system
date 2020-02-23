@@ -23,8 +23,14 @@
     </div>
     <div>
       <div class="row mt-5">
-        <div *ngFor="let candidate of candidates" >
-          <app-candidate  [name]='candidate.name' [imgUrl] = 'candidate.imgUrl' ></app-candidate>
+        <div *ngFor="let candidate of candidateList" >
+          <app-candidate
+            [name]='candidate.candidateName'
+            [surname]="candidate.candidateSurname"
+            [imgUrl] = imgUrl
+            [candidate]="candidate"
+            (candidateSelected)="vote($event)">
+          </app-candidate>
         </div>
         <i aria-hidden="true"></i>
       </div>

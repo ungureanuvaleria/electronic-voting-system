@@ -1,15 +1,12 @@
 import SerialPort from "serialport";
-const Readline = require('@serialport/parser-readline')
 import axios from "axios";
+import Readline from "@serialport/parser-readline";
 
-
-const virtualPort: string = "COM14";
-const baseURL: string = 'http://localhost:8080/api/fingerprint';
+const virtualPort: string = "COM5";
+const baseURL: string = 'http://localhost:8080/api/fingerprintScan';
 const headers = {
     'Content-Type': 'application/json'
 };
-const readline = require('readline');
-
 /*
     Initializes object which is used for making requests
     It is a library called Axios. If you are interested, you can read about it.
@@ -40,8 +37,7 @@ const apiClient = axios.create({
 
 const serialPort = new SerialPort(virtualPort, {
     baudRate: 9600
-})
-
+});
 
 /*
     Declare a new delimiter. This way, anytime you send via COM port data, when it detects '\n' character, it will flush
@@ -61,34 +57,39 @@ serialPort.pipe(parser);
 serialPort.on('open', () => {
     console.log("Opened connection at " + virtualPort + " port.");
 });
-
- parser.on('data', data => {
-   console.log(data);
-})
-
-
-serialPort.write('1');
-
 /*
     Parser 'data' event. Whenever pipe detects the '\n' character, it flushes the buffer, that being @data parameter of
     the callback. After flushing, it calls the callback for this event with @data as parameter.
-
+*/
 parser.on('data', data => {
     console.log("Received new fingerprint scan: " + data);
+
+    const dataArray = data.split(",", 3);
+
+    let correctness = dataArray[2];
+
+    const correctedCorrectnessValue = correctness.split('\r', 1)[0];
+
     const body = {
-        user_id: data.id,
-        correctness: data.correctness
+        fingerprint_id: 'Fingerprint0' + dataArray[0],
+        user_id: dataArray[1],
+        correctness: correctedCorrectnessValue
     };
-    /!*
+
+    console.log(JSON.stringify(body));
+
+
+    /*
         Sends the request to server that a new fingerprint was detected.
         If we get a good response, we perform an action in then() method.
         If we get an error, we perform an action in catch() method.
+
+     */
 
     apiClient.post('', JSON.stringify(body))
         .then(() => console.log("Successfully send data to server!"))
         .catch(error => console.log("Oops! Something went wrong when sending data to server!"));
 });
- */
 
 
 

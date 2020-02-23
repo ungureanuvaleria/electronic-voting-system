@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row intro">
+    <div class="col-md-12 text-center">
+      <h2>Workstation Login</h2>
+    </div>
+  </div>
+  <div class="row intro-message">
+    <div class="col-12 text-center">
+      <h3>Please, login your workstation.</h3>
+    </div>
+  </div>
+  <div class="row login-form justify-content-center">
+    <div class="col-12">
+      <form [formGroup]="workstationLoginForm" (ngSubmit)="loginWorkstation(workstationLoginForm.value)">
+        <div class="row justify-content-center">
+          <div class="col-md-4 col-sm-2" style="width: 100%"></div>
+          <div class="col-md-4 col-sm-8">
+            <div class="row vertically-aligned">
+              <div class="col-md-12 text-center">
+                <mat-form-field appearance="outline" style="padding: 15px; width: 100%;">
+                  <mat-label>Workstation Id</mat-label>
+                  <input matInput type="text" placeholder="Workstation Id" formControlName="workstationId">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row vertically-aligned">
+              <div class="col-12 text-center">
+                <mat-form-field appearance="outline" style="padding: 15px; width: 100%;">
+                  <mat-label>Workstation Password</mat-label>
+                  <input matInput type="password" placeholder="Workstation Password" formControlName="password">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row vertically-aligned">
+              <div class="col-12 text-center">
+                <button class="btn btn-outline-info" type="submit" mat-button>Login</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-2"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+

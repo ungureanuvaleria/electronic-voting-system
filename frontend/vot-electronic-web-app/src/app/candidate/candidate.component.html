@@ -1,13 +1,13 @@
 
 <label class="labl">
   <input type="radio" name="radioname" value="one_value" />
-  <div class="card">
+  <div class="card" (click)="selectCandidate()">
     <div class="row h-100 ">
       <div class="col my-auto">
         <img src="{{imgUrl}}" alt="partid">
       </div>
       <div class="col align-self-center">
-        {{name}}
+        {{candidate.candidateName}} {{candidate.candidateSurname}}
       </div>
     </div>
   </div>

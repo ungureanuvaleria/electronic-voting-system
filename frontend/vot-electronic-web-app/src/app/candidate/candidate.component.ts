@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Candidate} from "../models/Candidate";
 
 @Component({
   selector: 'app-candidate',
@@ -9,9 +10,15 @@ export class CandidateComponent implements OnInit {
 
   @Input() name: string;
   @Input() imgUrl: string;
+  @Input() surname: string;
+  @Input() candidate: Candidate;
+  @Output() candidateSelected = new EventEmitter();
   constructor() {}
 
   ngOnInit(): void {
   }
 
+  public selectCandidate() {
+    this.candidateSelected.emit(this.candidate);
+  }
 }

@@ -3,12 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AuthGuard } from './auth.guard';
+import {WorkstationLoginComponent} from './workstation-login/workstation-login.component';
+import {VotingPageComponent} from './voting-page/voting-page.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login'},
+  { path: '', pathMatch: 'full', redirectTo: 'workstationLogin' },
   { path: 'login', component: LoginPageComponent },
-  { path: 'admin', component: AdminPageComponent, canActivate: [AuthGuard] }
+  { path: 'admin', component: AdminPageComponent, canActivate: [AuthGuard] },
+  { path: 'workstationLogin', component: WorkstationLoginComponent },
+  { path: 'votingPage', component: VotingPageComponent},
+  { path: '**', component: WorkstationLoginComponent }
 ];
 
 @NgModule({

@@ -1,7 +1,10 @@
 package utm.valeria.votelectronic.service.impl;
 
 import org.springframework.beans.factory.support.SecurityContextProvider;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import utm.valeria.votelectronic.exception.FingerprintNotFoundException;
@@ -68,14 +71,26 @@ public class FingerprintServiceImpl implements FingerprintService {
             Workstation workstation = fingerprint.getWorkstation();
             User user = this.userService.getUserByFingerId(fingerId);
             
-            if (workstation.getIsRegistered()) {
+            if (workstation.getIsRegistered() && workstation.getSessionId() != null) {
+                /*
+                    ToDo: Verify it there is a ScanRecord entity for this workstation.
+                        If there is, ignore this scan.
+                 */
                 Long scanRecordId = this.scanRecordService.createNewRecord(fingerprintScan);
                 this.brokerMessagingTemplate.convertAndSendToUser(workstation.getSessionId(),
                         "/fingerprints",
-                                    scanRecordId);
+                                    scanRecordId,
+                        createHeaders(workstation.getSessionId()));
             }
         } catch (FingerprintNotFoundException | UserNotFoundException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    
+    private MessageHeaders createHeaders(String sessionId) {
+        StompHeaderAccessor stompHeaderAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
+        stompHeaderAccessor.setSessionId(sessionId);
+        stompHeaderAccessor.setLeaveMutable(Boolean.TRUE);
+        return stompHeaderAccessor.getMessageHeaders();
     }
 }

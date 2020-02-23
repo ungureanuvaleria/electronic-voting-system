@@ -11,6 +11,13 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AdminAuthModalComponent } from './admin-auth-modal/admin-auth-modal.component';
 import { VotingPageComponent } from './voting-page/voting-page.component';
 import { CandidateComponent } from './candidate/candidate.component';
+import { WorkstationLoginComponent } from './workstation-login/workstation-login.component';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from '@angular/material/button';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -21,15 +28,21 @@ import { CandidateComponent } from './candidate/candidate.component';
     AdminPageComponent,
     AdminAuthModalComponent,
     VotingPageComponent,
-    CandidateComponent
+    CandidateComponent,
+    WorkstationLoginComponent
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ModalModule.forRoot(),
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

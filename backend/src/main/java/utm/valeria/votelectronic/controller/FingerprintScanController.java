@@ -3,6 +3,7 @@ package utm.valeria.votelectronic.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import utm.valeria.votelectronic.service.FingerprintService;
 import javax.inject.Inject;
 
 @RestController
+@CrossOrigin("*")
 public class FingerprintScanController {
     private static final String ENDPOINT_URL = "/api/fingerprintScan";
     

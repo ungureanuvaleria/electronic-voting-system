@@ -29,6 +29,6 @@ public class Workstation {
     @Column(name = "session_id")
     private String sessionId;
     
-    @OneToOne(mappedBy = "fingerprint", cascade = CascadeType.ALL, optional = false)
+    @OneToOne(mappedBy = "workstation", cascade = CascadeType.ALL, optional = false)
     private Fingerprint fingerprint;
 }

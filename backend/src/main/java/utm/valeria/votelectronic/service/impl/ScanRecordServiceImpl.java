@@ -65,7 +65,7 @@ public class ScanRecordServiceImpl implements ScanRecordService {
             return scanRecord.getScanId();
         } catch (FingerprintNotFoundException | ConstraintViolationException | UserNotFoundException ex) {
             System.out.println(ex.getMessage());
-            return 1L;
+            return -1L;
         }
     }
 }

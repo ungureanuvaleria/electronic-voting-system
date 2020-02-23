@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Admin } from './models/admin-info';
+import { Admin } from '../models/admin-info';
 
 @Injectable({
   providedIn: 'root'

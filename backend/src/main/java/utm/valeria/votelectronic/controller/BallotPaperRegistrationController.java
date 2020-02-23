@@ -1,17 +1,33 @@
 package utm.valeria.votelectronic.controller;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import utm.valeria.votelectronic.model.BallotPaperRegistration;
+import utm.valeria.votelectronic.model.Candidate;
+import utm.valeria.votelectronic.service.BallotPaperService;
+
+import javax.inject.Inject;
 
 @RestController
+@CrossOrigin("*")
 public class BallotPaperRegistrationController {
     
     private static final String ENDPOINT_URL = "/api/ballotPaperRegistration";
     
+    private BallotPaperService ballotPaperService;
+    
+    @Inject
+    public void setBallotPaperService(BallotPaperService ballotPaperService) {
+        this.ballotPaperService = ballotPaperService;
+    }
+    
     @PostMapping(ENDPOINT_URL)
-    public void registerBallotPaper(@RequestBody String scanId) {
-        
+    public void registerBallotPaper(@RequestBody BallotPaperRegistration ballotPaperRegistration) {
+        Long scanId = ballotPaperRegistration.getScanId();
+        Candidate candidate = ballotPaperRegistration.getCandidate();
+        this.ballotPaperService.createBallotPaper(scanId, candidate);
         /*
             TODO
              Here @RequestBody will be an object which will contain scanId and a ballot paper with selected vote.
