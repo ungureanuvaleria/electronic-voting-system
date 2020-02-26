@@ -18,6 +18,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
 import {HttpClientModule} from "@angular/common/http";
+import { ThankYouPageComponent } from './thank-you-page/thank-you-page.component';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {HttpClientModule} from "@angular/common/http";
     AdminAuthModalComponent,
     VotingPageComponent,
     CandidateComponent,
-    WorkstationLoginComponent
+    WorkstationLoginComponent,
+    ThankYouPageComponent
 
   ],
   imports: [

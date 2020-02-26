@@ -27,18 +27,15 @@
           <app-candidate
             [name]='candidate.candidateName'
             [surname]="candidate.candidateSurname"
-            [imgUrl] = imgUrl
+            [imgUrl] = "candidate.candidateImgUrl"
+            [party]="candidate.politicalParty"
             [candidate]="candidate"
             (candidateSelected)="vote($event)">
           </app-candidate>
         </div>
         <i aria-hidden="true"></i>
       </div>
-<!--      <div class="mt-3" *ngFor="let candidate of candidates">-->
-<!--          <div class="row ">-->
-<!--            <app-candidate [name]='candidate'></app-candidate>-->
-<!--          </div>-->
-<!--      </div>-->
+      <button type="submit" (click)="vote()">Autentificare ca administrator</button>
     </div>
   </div>
 </div>

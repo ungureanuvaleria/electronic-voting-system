@@ -49,28 +49,57 @@ public class VotelectronicApplication implements CommandLineRunner {
         fingerprint.setWorkstation(workstation);
         
         User user = new User();
-        user.setName("John");
-        user.setSurname("Connor");
-        user.setFingerId(4);
-        
+        user.setName("Valeria");
+        user.setSurname("Ungureanu");
+        user.setFingerId(2);
         this.userRepository.save(user);
-    
-        PoliticalParty politicalParty = new PoliticalParty();
-        politicalParty.setPartyId("PAS");
-        politicalParty.setPartyName("PAS");
-        politicalParty = this.politicalPartyRepository.save(politicalParty);
-    
+
+        PoliticalParty politicalParty1 = new PoliticalParty();
+        politicalParty1.setPartyId("1");
+        politicalParty1.setPartyName("PAS");
+        this.politicalPartyRepository.save(politicalParty1);
+
         Candidate candidate1 = new Candidate();
-        candidate1.setCandidateName("Maia");
-        candidate1.setCandidateSurname("Sandu");
-        candidate1.setPoliticalParty(politicalParty);
-    
+        candidate1.setCandidateName("Marian");
+        candidate1.setCandidateSurname("Lupu");
+        candidate1.setCandidateImgUrl("../../assets/images/politicalParties/PDM.png");
+        candidate1.setPoliticalParty(politicalParty1);
+
         Candidate candidate2 = new Candidate();
-        candidate2.setCandidateName("Andrei");
-        candidate2.setCandidateSurname("Năstase");
-        candidate2.setPoliticalParty(politicalParty);
-        
+        candidate2.setCandidateName("Mihai");
+        candidate2.setCandidateSurname("Ghimpu");
+        candidate2.setCandidateImgUrl("../../assets/images/politicalParties/PL.png");
+        candidate2.setPoliticalParty(politicalParty1);
+
+        Candidate candidate3 = new Candidate();
+        candidate3.setCandidateName("Iurie");
+        candidate3.setCandidateSurname("Leancă");
+        candidate3.setCandidateImgUrl("../../assets/images/politicalParties/PPEM.png");
+        candidate3.setPoliticalParty(politicalParty1);
+
+        Candidate candidate4 = new Candidate();
+        candidate4.setCandidateName("Andrei");
+        candidate4.setCandidateSurname("Năstase");
+        candidate4.setCandidateImgUrl("../../assets/images/politicalParties/PPDA.png");
+        candidate4.setPoliticalParty(politicalParty1);
+
+        Candidate candidate5 = new Candidate();
+        candidate5.setCandidateName("Maia");
+        candidate5.setCandidateSurname("Sandu");
+        candidate5.setCandidateImgUrl("../../assets/images/politicalParties/PAS.png");
+        candidate5.setPoliticalParty(politicalParty1);
+
+        Candidate candidate6 = new Candidate();
+        candidate6.setCandidateName("Igor");
+        candidate6.setCandidateSurname("Dodon");
+        candidate6.setCandidateImgUrl("../../assets/images/politicalParties/PSRM.png");
+        candidate6.setPoliticalParty(politicalParty1);
+
         this.candidateRepository.save(candidate1);
         this.candidateRepository.save(candidate2);
+        this.candidateRepository.save(candidate3);
+        this.candidateRepository.save(candidate4);
+        this.candidateRepository.save(candidate5);
+        this.candidateRepository.save(candidate6);
     }
 }

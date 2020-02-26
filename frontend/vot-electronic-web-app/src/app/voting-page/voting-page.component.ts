@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {CandidateComponent} from '../candidate/candidate.component';
 import {Candidate} from '../models/Candidate';
-import {CandidateService} from "../services/candidate.service";
-import {BallotPaperRegistration} from "../models/BallotPaperRegistration";
-import {BallotPaperRegistrationService} from "../services/ballot-paper-registration.service";
+import {CandidateService} from '../services/candidate.service';
+import {BallotPaperRegistration} from '../models/BallotPaperRegistration';
+import {BallotPaperRegistrationService} from '../services/ballot-paper-registration.service';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -13,14 +14,14 @@ import {BallotPaperRegistrationService} from "../services/ballot-paper-registrat
 })
 export class VotingPageComponent implements OnInit {
   candidateList: Candidate[];
-  imgUrl = '../../assets/images/stema.PNG';
 
-  candidates: { name: string, imgUrl: string }[] = [
+ /* candidates: { name: string, imgUrl: string }[] = [
     {name: 'Candidat1', imgUrl: '../../assets/images/handshake.png'},
     {name: 'candidat2', imgUrl: '../../assets/images/stema.PNG'}];
-
+*/
   constructor(private candidateService: CandidateService,
-              private ballotPaperRegistrationService: BallotPaperRegistrationService) {}
+              private ballotPaperRegistrationService: BallotPaperRegistrationService,
+              private router: Router) {}
 
   ngOnInit(): void {
     this.candidateService.getAllCandidates()
@@ -43,6 +44,7 @@ export class VotingPageComponent implements OnInit {
       .toPromise()
       .then(() => {
         localStorage.removeItem('scanId');
+        this.router.navigateByUrl('thankYouPage');
       })
       .catch(error => {
         console.error(error);

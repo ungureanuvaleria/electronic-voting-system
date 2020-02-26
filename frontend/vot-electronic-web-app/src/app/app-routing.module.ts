@@ -5,6 +5,7 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { AuthGuard } from './auth.guard';
 import {WorkstationLoginComponent} from './workstation-login/workstation-login.component';
 import {VotingPageComponent} from './voting-page/voting-page.component';
+import {ThankYouPageComponent} from "./thank-you-page/thank-you-page.component";
 
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminPageComponent, canActivate: [AuthGuard] },
   { path: 'workstationLogin', component: WorkstationLoginComponent },
   { path: 'votingPage', component: VotingPageComponent},
+  { path: 'thankYouPage', component: ThankYouPageComponent},
   { path: '**', component: WorkstationLoginComponent }
 ];
 

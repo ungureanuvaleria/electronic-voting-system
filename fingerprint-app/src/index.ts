@@ -2,7 +2,7 @@ import SerialPort from "serialport";
 import axios from "axios";
 import Readline from "@serialport/parser-readline";
 
-const virtualPort: string = "COM5";
+const virtualPort: string = "COM14";
 const baseURL: string = 'http://localhost:8080/api/fingerprintScan';
 const headers = {
     'Content-Type': 'application/json'
