@@ -11,6 +11,7 @@ export class CandidateComponent implements OnInit {
   @Input() name: string;
   @Input() imgUrl: string;
   @Input() surname: string;
+  @Input() party: string;
   @Input() candidate: Candidate;
   @Output() candidateSelected = new EventEmitter();
   constructor() {}

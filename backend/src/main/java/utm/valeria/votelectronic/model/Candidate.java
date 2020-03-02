@@ -19,6 +19,9 @@ public class Candidate {
     
     @Column(name = "candidate_surname")
     private String candidateSurname;
+
+    @Column(name = "candidate_img_Url")
+    private String candidateImgUrl;
     
     @ManyToOne
     @JoinColumn(name = "party_id", nullable = false)

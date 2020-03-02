@@ -15,7 +15,7 @@ const websocketHeaders = {
     fingerprint_id: "Fingerprint01"
 };
 
-const virtualPort: string = "COM5";
+const virtualPort: string = "COM14";
 const baseURL: string = 'http://localhost:8080/api/fingerprintScan';
 const headers = {
     'Content-Type': 'application/json'

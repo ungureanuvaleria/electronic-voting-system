@@ -1,6 +1,128 @@
-button{
-  background: rgb(1, 29, 51);
-  border-color: transparent;
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "TitiliumWeb", sans-serif;
+}
+
+.nav-wrapper {
+  height: 50px;
+  padding: 0 20px;
+  background-color: #6f72d5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #f2f2f2;
+  overflow: hidden;
+}
+
+nav {
+  width: 75vw;
+  display: flex;
+  justify-content: space-between;
   color: #fff;
+  font-size: 14px;
+}
+
+.nav__item {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 15px;
+}
+
+header {
+  height: 80px;
+  background-color: #f7f7f7;
+  color: #000;
+  border-top: 1px solid #99b0fd0d;
+  border-bottom: 1px solid #99b0fd0d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 210px; */
+}
+
+.logo img {
+  width: 45px;
   cursor: pointer;
+}
+
+.tricolour__footer {
+  display: flex;
+  height: 2px;
+}
+
+.tricolour_blue {
+  width: 33.33vw;
+  background: #3F51B5;
+}
+
+.tricolour_yellow {
+  width: 33.33vw;
+  background: #ffef5d;
+}
+
+.tricolour_red {
+  width: 33.33vw;
+  background: #e94b3d;
+}
+.content-wrapper {
+  width: 100vw;
+  min-height: calc(70vh - 134px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.content-wrapper::before {
+  position: absolute;
+  z-index: -1;
+  top: 13rem;
+  content: '';
+  /*background-image: url(../../assets/images/);*/
+  background-repeat: no-repeat;
+  right: 0;
+  left: auto;
+  width: 45.125rem;
+  height: calc(100vh - 208px);
+  background-size: auto;
+  filter: opacity(.25);
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logout-button{
+  color: #394f98;
+  display:inline-block;
+  cursor: pointer;
+  padding: 7px 15px;
+  border: 2px solid rgba(91, 133, 249, 0.81);
+  border-radius: 3px;
+}
+.logout-button:active{
+  color: #ff5e00;
+  border: 2px solid rgb(255, 94, 0);
+}
+.option-button{
+  padding: 30px 30px;
+  background: rgb(111, 114, 213);
+  color: white;
+  white-space: nowrap;
+  text-align: center;
+  border: none;
+  width: 35vw;
+}
+.option-button:focus{
+  background: rgb(188, 172, 213);
+  padding: 40px 40px;
 }
