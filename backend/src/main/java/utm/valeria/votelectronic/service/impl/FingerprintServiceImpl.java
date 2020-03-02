@@ -87,6 +87,33 @@ public class FingerprintServiceImpl implements FingerprintService {
         }
     }
     
+    @Override
+    @Transactional
+    public void setFingerprintSessionId(String fingerprintId, String sessionId) throws FingerprintNotFoundException {
+        Optional<Fingerprint> fingerprintOptional = this.fingerprintRepository.findByFingerprintId(fingerprintId);
+        
+        if (fingerprintOptional.isPresent()) {
+            Fingerprint fingerprint = fingerprintOptional.get();
+            fingerprint.setSessionId(sessionId);
+        } else {
+            throw new FingerprintNotFoundException("Fingerprint with id " + fingerprintId + "was not found!");
+        }
+    }
+    
+    @Override
+    @Transactional
+    public void parseNewMessage(String message, String fingerprintSessionId) throws FingerprintNotFoundException {
+        Optional<Fingerprint> fingerprint = this.fingerprintRepository.findBySessionId(fingerprintSessionId);
+        if (fingerprint.isPresent()) {
+            this.brokerMessagingTemplate.convertAndSendToUser(fingerprintSessionId,
+                    "/fingerprints",
+                               message,
+                               createHeaders(fingerprintSessionId));
+        } else {
+            throw new FingerprintNotFoundException("Fingerprint with sessionId" + fingerprintSessionId + "was not found!");
+        }
+    }
+    
     private MessageHeaders createHeaders(String sessionId) {
         StompHeaderAccessor stompHeaderAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
         stompHeaderAccessor.setSessionId(sessionId);

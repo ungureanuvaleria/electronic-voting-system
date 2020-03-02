@@ -9,7 +9,7 @@ import org.springframework.messaging.support.ExecutorChannelInterceptor;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import utm.valeria.votelectronic.configuration.interceptor.CustomChannelInterceptor;
+import utm.valeria.votelectronic.configuration.interceptor.WorkstationChannelInterceptor;
 
 import javax.inject.Inject;
 
@@ -18,11 +18,11 @@ import javax.inject.Inject;
 @Order(Ordered.HIGHEST_PRECEDENCE + 99)
 public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer {
     
-    private ExecutorChannelInterceptor executorChannelInterceptor;
+    private ExecutorChannelInterceptor workstationChannelInterceptor;
     
     @Inject
-    public void setExecutorChannelInterceptor(CustomChannelInterceptor customChannelInterceptor) {
-        this.executorChannelInterceptor = customChannelInterceptor;
+    public void setExecutorChannelInterceptor(WorkstationChannelInterceptor workstationChannelInterceptor) {
+        this.workstationChannelInterceptor = workstationChannelInterceptor;
     }
     
     @Override
@@ -40,6 +40,6 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     
     @Override
     public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(this.executorChannelInterceptor);
+        registration.interceptors(this.workstationChannelInterceptor);
     }
 }

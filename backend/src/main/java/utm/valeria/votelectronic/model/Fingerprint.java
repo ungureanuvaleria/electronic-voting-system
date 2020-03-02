@@ -17,7 +17,10 @@ public class Fingerprint {
     @Column(name = "fingerprint_id")
     private String fingerprintId;
     
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name = "workstation_id")
     private Workstation workstation;
+    
+    @Column(name = "session_id")
+    private String sessionId;
 }

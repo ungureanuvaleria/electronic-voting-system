@@ -8,4 +8,6 @@ public interface FingerprintService {
     
     Fingerprint getFingerprintByFingerprintId(String fingerprintId) throws FingerprintNotFoundException;
     void transferFingerprintScanToWorkstation(FingerprintScan fingerprintScan) throws FingerprintNotFoundException;
+    void setFingerprintSessionId(String fingerprintId, String sessionId) throws FingerprintNotFoundException;
+    void parseNewMessage(String message, String fingerprintSessionId) throws FingerprintNotFoundException;
 }

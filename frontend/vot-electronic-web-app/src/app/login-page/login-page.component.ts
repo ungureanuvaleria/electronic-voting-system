@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 
 @Component({

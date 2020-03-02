@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 public class MessageHeadersDecorator {
-    private static final String WORKSTATION_HEADER_NAME = "workstation_id";
     
     private MessageHeaders messageHeaders;
     
@@ -17,9 +16,9 @@ public class MessageHeadersDecorator {
         this.messageHeaders = messageHeaders;
     }
     
-    public String getWorkstationIdHeaderValue() throws HeaderValueNotFoundException {
+    public Map<String, String> getHeaderValue(String requiredHeader) throws HeaderValueNotFoundException {
         Object nativeHeaders = getNativeHeadersOrReturnEmptyMap();
-        return retrieveWorkstationId(nativeHeaders);
+        return retrieveHeaderValue(nativeHeaders, requiredHeader);
     }
     
     private Object getNativeHeadersOrReturnEmptyMap() {
@@ -31,14 +30,16 @@ public class MessageHeadersDecorator {
         }
     }
     
-    private String retrieveWorkstationId(Object nativeHeaders) throws HeaderValueNotFoundException {
+    private Map<String, String> retrieveHeaderValue(Object nativeHeaders, String requiredHeader) throws HeaderValueNotFoundException {
         if(nativeHeaders instanceof Map) {
             Map<String, List<String>> headerMap = (Map<String, List<String>>) nativeHeaders;
-            List<String> headerValues = headerMap.get(WORKSTATION_HEADER_NAME);
+            List<String> headerValues = headerMap.get(requiredHeader);
             if (headerValues == null) {
                 throw new HeaderValueNotFoundException("Could not retrieve headers values since values list is empty!");
             } else {
-                return headerValues.get(0);
+                Map<String, String> headerValueMap = new HashMap<>();
+                headerValueMap.put(requiredHeader, headerValues.get(0));
+                return headerValueMap;
             }
         } else {
             throw new HeaderValueNotFoundException("Could not retrieve headers as object is not instanceof Map!");
