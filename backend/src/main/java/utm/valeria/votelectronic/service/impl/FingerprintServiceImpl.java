@@ -103,12 +103,14 @@ public class FingerprintServiceImpl implements FingerprintService {
     @Override
     @Transactional
     public void parseNewMessage(String message, String fingerprintSessionId) throws FingerprintNotFoundException {
-        Optional<Fingerprint> fingerprint = this.fingerprintRepository.findBySessionId(fingerprintSessionId);
-        if (fingerprint.isPresent()) {
-            this.brokerMessagingTemplate.convertAndSendToUser(fingerprintSessionId,
+        System.out.println(message);
+        Optional<Fingerprint> fingerprintOptional = this.fingerprintRepository.findBySessionId(fingerprintSessionId);
+        if (fingerprintOptional.isPresent()) {
+            Workstation workstation = fingerprintOptional.get().getWorkstation();
+            this.brokerMessagingTemplate.convertAndSendToUser(workstation.getSessionId(),
                     "/fingerprints",
                                message,
-                               createHeaders(fingerprintSessionId));
+                               createHeaders(workstation.getSessionId()));
         } else {
             throw new FingerprintNotFoundException("Fingerprint with sessionId" + fingerprintSessionId + "was not found!");
         }

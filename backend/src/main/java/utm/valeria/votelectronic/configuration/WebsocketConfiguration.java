@@ -1,6 +1,8 @@
 package utm.valeria.votelectronic.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -16,13 +18,19 @@ import javax.inject.Inject;
 @Configuration
 @EnableWebSocketMessageBroker
 @Order(Ordered.HIGHEST_PRECEDENCE + 99)
+@DependsOn({"workstationChannelInterceptor"})
 public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer {
     
     private ExecutorChannelInterceptor workstationChannelInterceptor;
-    
+
     @Inject
     public void setExecutorChannelInterceptor(WorkstationChannelInterceptor workstationChannelInterceptor) {
         this.workstationChannelInterceptor = workstationChannelInterceptor;
+    }
+    
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(this.workstationChannelInterceptor);
     }
     
     @Override
@@ -36,10 +44,5 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     public void configureMessageBroker(MessageBrokerRegistry config) {
         config.setApplicationDestinationPrefixes("/app");
         config.enableSimpleBroker("/fingerprints");
-    }
-    
-    @Override
-    public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(this.workstationChannelInterceptor);
     }
 }

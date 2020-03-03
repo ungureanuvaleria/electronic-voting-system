@@ -36,6 +36,7 @@ public class VotelectronicApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Fingerprint fingerprint = new Fingerprint();
         fingerprint.setFingerprintId("Fingerprint01");
+        fingerprint.setSessionId(null);
         fingerprint = this.fingerprintRepository.save(fingerprint);
     
         Workstation workstation = new Workstation();
@@ -53,6 +54,12 @@ public class VotelectronicApplication implements CommandLineRunner {
         user.setSurname("Ungureanu");
         user.setFingerId(2);
         this.userRepository.save(user);
+    
+//        User user1 = new User();
+//        user1.setName("Stanislav");
+//        user1.setSurname("Sanduta");
+//        user1.setFingerId(2);
+//        this.userRepository.save(user1);
 
         PoliticalParty politicalParty1 = new PoliticalParty();
         politicalParty1.setPartyId("1");

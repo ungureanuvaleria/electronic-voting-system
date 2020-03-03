@@ -7,6 +7,7 @@ import utm.valeria.votelectronic.repository.UserRepository;
 import utm.valeria.votelectronic.service.UserService;
 
 import javax.inject.Inject;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,5 +29,20 @@ public class UserServiceImpl implements UserService {
         } else {
             throw new UserNotFoundException("User with fingerprint " + fingerId + " was not found!");
         }
+    }
+    
+    @Override
+    public void addUser(User user) {
+        this.userRepository.save(user);
+    }
+    
+    @Override
+    public List<User> getAllUsers() {
+        return this.userRepository.findAll();
+    }
+    
+    @Override
+    public void deleteUser(User user) {
+        this.userRepository.delete(user);
     }
 }

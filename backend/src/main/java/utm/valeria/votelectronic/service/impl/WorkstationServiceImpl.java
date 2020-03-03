@@ -1,9 +1,15 @@
 package utm.valeria.votelectronic.service.impl;
 
+import org.springframework.messaging.MessageHeaders;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.stomp.StompCommand;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import utm.valeria.votelectronic.enums.WorkstationMessagesEnum;
 import utm.valeria.votelectronic.exception.WorkstationNotFoundException;
 import utm.valeria.votelectronic.exception.WrongCredentialsException;
+import utm.valeria.votelectronic.model.Fingerprint;
 import utm.valeria.votelectronic.model.Workstation;
 import utm.valeria.votelectronic.model.WorkstationCredentials;
 import utm.valeria.votelectronic.repository.WorkstationRepository;
@@ -17,10 +23,16 @@ import java.util.function.Supplier;
 public class WorkstationServiceImpl implements WorkstationService {
     
     private WorkstationRepository workstationRepository;
+    private SimpMessagingTemplate brokerMessagingTemplate;
     
     @Inject
     public void setWorkstationRepository(WorkstationRepository workstationRepository) {
         this.workstationRepository = workstationRepository;
+    }
+    
+    @Inject
+    public void setBrokerMessagingTemplate(SimpMessagingTemplate brokerMessagingTemplate) {
+        this.brokerMessagingTemplate = brokerMessagingTemplate;
     }
     
     @Override
@@ -66,5 +78,26 @@ public class WorkstationServiceImpl implements WorkstationService {
     public void setWorkstationSessionId(String workstationId, String sessionId) throws WorkstationNotFoundException {
         Workstation workstation = this.getWorkstationByWorkstationId(workstationId);
         workstation.setSessionId(sessionId);
+    }
+    
+    @Override
+    @Transactional
+    public void parseMessage(String message, String workstationSessionId) throws WorkstationNotFoundException {
+        Optional<Workstation> workstationOptional = this.workstationRepository.findBySessionId(workstationSessionId);
+        
+        if (workstationOptional.isPresent()) {
+            Fingerprint fingerprint = workstationOptional.get().getFingerprint();
+            this.brokerMessagingTemplate.convertAndSendToUser(fingerprint.getSessionId(),
+                    "/fingerprints",
+                    message,
+                    createHeaders(fingerprint.getSessionId()));
+        }
+    }
+    
+    private MessageHeaders createHeaders(String sessionId) {
+        StompHeaderAccessor stompHeaderAccessor = StompHeaderAccessor.create(StompCommand.MESSAGE);
+        stompHeaderAccessor.setSessionId(sessionId);
+        stompHeaderAccessor.setLeaveMutable(Boolean.TRUE);
+        return stompHeaderAccessor.getMessageHeaders();
     }
 }
